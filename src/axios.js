@@ -6,7 +6,7 @@ import 'nprogress/nprogress.css'
 
 const instance = axios.create({
   // 配置请求根路径
-  baseURL: 'http://localhost:9002/bookshop/api/v1',
+  baseURL: 'http://localhost:9001/bookshop/api/v1/',
   // 请求超时时间
   timeout: 10000
 })
@@ -24,3 +24,18 @@ instance.interceptors.response.use(config => {
   nProgress.done()
   return config
 })
+
+export async function login(loginForm) {
+  const { data: res } = await instance.post('login', loginForm)
+  return res
+}
+
+export async function register(registerForm) {
+  const { data: res } = await instance.post('register', registerForm)
+  return res
+}
+
+export async function bookList(queryVo) {
+  const { data: res } = await instance.get('booklist', { params: queryVo })
+  return res
+}
