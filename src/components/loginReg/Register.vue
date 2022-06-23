@@ -49,7 +49,7 @@
         </el-form-item>
       </el-form>
       <div class="flex items-center px-5 justify-center">
-        <el-button type="primary" size="medium" @click="userRegister">登录</el-button>
+        <el-button type="primary" size="medium" @click="userRegister">注册</el-button>
         <el-button type="info" size="medium" @click="resetRegisterForm">重置</el-button>
       </div>
       <div class="text-xs text-gray-600 pt-5 pl-10 hover:text-black" @click="login">
