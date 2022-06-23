@@ -12,7 +12,12 @@ const routes = [
       {
         path: "/orderlist",
         component: () => import('./components/order/OrderList.vue')
+      },
+      {
+        path: "/orderconfirm",
+        component: () => import('./components/order/OrderConfirm.vue')
       }
+
     ]
   },
   {

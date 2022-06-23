@@ -7,6 +7,8 @@ import './assets/global.css'
 import './assets/fonts/iconfont.css'
 // 导入路由
 import router from './router'
+// 导入element图标
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 const app = createApp(App)
 

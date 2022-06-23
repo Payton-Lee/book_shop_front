@@ -39,3 +39,23 @@ export async function bookList(queryVo) {
   const { data: res } = await instance.get('booklist', { params: queryVo })
   return res
 }
+
+export async function bookListOne(bookId) {
+  const { data: res } = await instance.get(`/${bookId}/booklist`)
+  return res
+}
+
+export async function userAddressList(userId) {
+  const { data: res } = await instance.get(`/order/${userId}/addresslist`)
+  return res
+}
+
+export async function buyBook(order) {
+  const { data: res } = await instance.post('/order/neworder', order)
+  return res
+}
+
+export async function getUserOrderList(userId, queryVo) {
+  const { data: res } = await instance.get(`/order/${userId}/orderlist`, { params: queryVo })
+  return res
+}

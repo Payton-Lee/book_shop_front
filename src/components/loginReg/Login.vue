@@ -85,6 +85,7 @@ const userLogin = () => {
       return ElMessage.error(res.message)
     }
     ElMessage.success(res.data.msg)
+    window.sessionStorage.setItem("userId", res.data.userId)
     window.sessionStorage.setItem("username", res.data.username)
     window.sessionStorage.setItem("token", res.data.token)
     route.push("/booklist")

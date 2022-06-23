@@ -10,7 +10,7 @@
         <div class="w-full h-4 text-gray-500 text-sm leading-4">作者： {{ item.author }}</div>
         <div class="text-orange-500 w-full h-4 leading-4 text-sm">价格: {{ item.price }}.00 元</div>
         <div class="flex justify-end">
-          <el-button class="!m-0 !bg-stone-400 !text-black" size="default">购买</el-button>
+          <el-button class="!m-0 !bg-stone-400 !text-black" size="default" @click="buy(item.id)">购买</el-button>
         </div>
       </div>
     </div>
@@ -52,6 +52,18 @@ export default {
     handleCurrentChange(newCurrent) {
       this.queryVo.current = newCurrent
       this.getBookList()
+    },
+    buy(id) {
+      let userId = window.sessionStorage.getItem("userId")
+      if(userId === null) {
+        return this.$router.push("/login")
+      }
+      this.$router.push({
+        path: "/orderconfirm",
+        query: {
+          bookId: id
+        }
+      })
     }
   },
   created() {

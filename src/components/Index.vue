@@ -29,7 +29,7 @@
         </div>
       </el-header>
       <el-main class="!px-50">
-        <div class="w-full min-h-50 bg-stone-300 rounded-lg">
+        <div class="w-full min-h-50 bg-stone-300 rounded-lg overflow-hidden">
           <router-view></router-view>
         </div>
       </el-main>
