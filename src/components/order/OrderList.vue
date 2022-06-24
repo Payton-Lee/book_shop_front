@@ -1,15 +1,36 @@
 <template>
-  <div class="w-full min-h-100 p-5">
-    <el-row>
-      <el-col :span="8">
-        <el-input placeholder="请输入内容" v-model="queryVo.queryInfo" clearable @clear="getOrderList">
-          <template #append>
-            <el-button @click="getOrderList" icon="el-icon-search"/>
-          </template>
-        </el-input>
-      </el-col>
-    </el-row>
-    <el-table :data="orderList">
+  <div class="w-full p-5">
+    <el-form :model="queryVo">
+      <el-row>
+        <el-col :span="10">
+          <el-form-item>
+            <el-input v-model="queryVo.queryInfo" placeholder="搜索订单" size="large" clearable @clear="getOrderList">
+            </el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="3">
+          <el-form-item>
+            <el-button size="large" class="!m-0 !bg-stone-400 !text-black" @click="getOrderList"><i
+                class="iconfont icon-sousuo"></i></el-button>
+          </el-form-item>
+        </el-col>
+      </el-row>
+    </el-form>
+    <el-table :data="orderList" class="rounded-lg" @expand-change="showAddress">
+      <el-table-column type="expand">
+        <template #default="{}">
+          <el-empty v-if="isEmpty" description="地址获取失败，请重新刷新一下" :image-size="50"></el-empty>
+          <el-row :gutter="17">
+            <el-col :span="2" style="width:100px; min-height: 50px"></el-col>
+            <el-col :span="10">
+              <p>收货人： {{ currentAddress.name }}</p>
+              <p>收货地址： {{ currentAddress.province + currentAddress.city + currentAddress.area + currentAddress.address
+              }}</p>
+              <p>电话号码： {{ currentAddress.telephone }}</p>
+            </el-col>
+          </el-row>
+        </template>
+      </el-table-column>
       <el-table-column label="图片" prop="image" align="center" width="200px">
         <template #default="scope">
           <el-image :src="'http://localhost:9001/bookshop/api/v1/image/' + scope.row.image">
@@ -43,13 +64,12 @@
           <el-tag type="success" v-else>已发货</el-tag>
         </template>
       </el-table-column>
-
     </el-table>
   </div>
 </template>
 
 <script>
-import { getUserOrderList } from '../../axios'
+import { getUserOrderList, getCurrentAddress } from '../../axios'
 
 export default {
   data() {
@@ -57,10 +77,11 @@ export default {
       orderList: [],
       queryVo: {
         current: 1,
-        size: 5,
+        size: 1000,
         queryInfo: ''
       },
-      total: 0,
+      currentAddress: {},
+      isEmpty: true
     }
   },
   methods: {
@@ -71,7 +92,17 @@ export default {
         return this.$router.push("/booklist")
       }
       this.orderList = res.data.records
-      this.total = res.total
+    },
+    async showAddress(row, expandRows) {
+      console.log(row)
+      // return 
+      const res = await getCurrentAddress(row.userId)
+      if (res.status !== 200) {
+        return
+      }
+      console.log(res);
+      this.currentAddress = res.data
+      this.isEmpty = false
     }
   },
   created() {

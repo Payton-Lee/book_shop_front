@@ -59,3 +59,8 @@ export async function getUserOrderList(userId, queryVo) {
   const { data: res } = await instance.get(`/order/${userId}/orderlist`, { params: queryVo })
   return res
 }
+
+export async function getCurrentAddress(addressId) {
+  const { data: res } = await instance.get(`/order/${addressId}/address`)
+  return res
+}

@@ -1,26 +1,25 @@
 <template>
   <div class="w-full min-h-100 p-5">
-    <el-table :data="bookList" border stripe>
-      <el-table-column label="图片" prop="image" align="center" width="200px">
+    <el-table :data="bookList" border stripe  class="rounded-lg">
+      <el-table-column label="图片" prop="image" align="center" width="180px">
         <template #default="scope">
           <el-image :src="'http://localhost:9001/bookshop/api/v1/image/' + scope.row.image">
           </el-image>
         </template>
       </el-table-column>
-      <el-table-column label="图书" prop="bookName" align="center" width="80px"></el-table-column>
+      <el-table-column label="图书" prop="bookName" align="center" width="160px"></el-table-column>
       <el-table-column label="作者" prop="author" align="center" width="80px"></el-table-column>
-      <el-table-column label="ISBN" prop="isbn" align="center"></el-table-column>
-      <el-table-column label="价格" prop="price" align="center">
+      <el-table-column label="ISBN" prop="isbn" align="center" width="160px"></el-table-column>
+      <el-table-column label="价格" prop="price" align="center" width="80px">
         <template #default="scope"> {{ scope.row.price }}.00元</template>
       </el-table-column>
-      <el-table-column label="出版社" prop="publisher" align="center"></el-table-column>
-      <el-table-column label="购买数量" align="center">
+      <el-table-column label="出版社" prop="publisher" align="center" width="150px"></el-table-column>
+      <el-table-column label="购买数量" align="center" width="180px">
         <template #default="{}">
-          <el-input v-model="order.count" type="number" :min="1">
-          </el-input>
+          <el-input-number  v-model="order.count" :min="1"/>
         </template>
       </el-table-column>
-      <el-table-column label="总价" align="center">
+      <el-table-column label="总价" align="center" width="100px">
         <template #default="scope">
           {{ scope.row.price * order.count }}.00 元
         </template>
