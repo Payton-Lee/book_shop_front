@@ -64,3 +64,23 @@ export async function getCurrentAddress(addressId) {
   const { data: res } = await instance.get(`/order/${addressId}/address`)
   return res
 }
+
+export async function getAddressListByuserId(userId) {
+  const { data: res } = await instance.get(`/order/${userId}/addresslist`)
+  return res
+} 
+
+export async function deleteAddressByAddressId(addressId) {
+  const { data: res } = await instance.delete(`/address/${addressId}/deleteaddress`)
+  return res
+}
+
+export async function saveAddressWithUserId(address) {
+  const { data: res } = await instance.post("address/newaddress", address)
+  return res
+}
+
+export async function editAddressWithUserId(address) {
+  const { data: res } = await instance.put("address/editaddress", address)
+  return res
+}

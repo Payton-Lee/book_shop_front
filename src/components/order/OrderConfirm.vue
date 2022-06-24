@@ -1,6 +1,6 @@
 <template>
   <div class="w-full min-h-100 p-5">
-    <el-table :data="bookList" border stripe  class="rounded-lg">
+    <el-table :data="bookList" border stripe class="rounded-lg">
       <el-table-column label="图片" prop="image" align="center" width="180px">
         <template #default="scope">
           <el-image :src="'http://localhost:9001/bookshop/api/v1/image/' + scope.row.image">
@@ -16,7 +16,7 @@
       <el-table-column label="出版社" prop="publisher" align="center" width="150px"></el-table-column>
       <el-table-column label="购买数量" align="center" width="180px">
         <template #default="{}">
-          <el-input-number  v-model="order.count" :min="1"/>
+          <el-input-number v-model="order.count" :min="1" />
         </template>
       </el-table-column>
       <el-table-column label="总价" align="center" width="100px">
@@ -33,8 +33,8 @@
           <el-radio v-model="order.orderPay" :label="2">银行卡</el-radio>
         </el-form-item>
         <el-form-item label="选择收货地址" class="!space-x-5">
-          <el-select v-model="order" placeholder="请选择">
-            <el-option v-for="item in addressList" :key="item.id"></el-option>
+          <el-select v-model="order.addressId" placeholder="请选择">
+            <el-option v-for="item in addressList" :key="item.id" :label="item.name + '，' + item.telephone + '，' + item.province + item.city + item.area + item.address" :value="item.id"></el-option>
           </el-select>
           <div class="w-20"></div>
           <el-button @click="comfirmOrder" class="!bg-stone-400 !text-black">提交订单</el-button>
@@ -53,7 +53,7 @@ export default {
       order: {
         bookId: 0,
         userId: 0,
-        addressId: 1,
+        addressId: '',
         count: 1,
         orderPrice: 0,
         orderPay: 0
@@ -81,14 +81,15 @@ export default {
     async getAddressListByUserId() {
       console.log(this.addressList);
       const res = await userAddressList(this.order.userId)
-      console.log(res);
+      console.log("adderess", res);
       this.addressList = res.data
+      console.log("adderess", this.addressList);
     },
     async comfirmOrder() {
       console.log(this.order);
       this.order.orderPrice = this.bookList[0].price * this.order.count
       const res = await buyBook(this.order)
-      if(res.status !== 201) {
+      if (res.status !== 201) {
         return ElMessage.error("哪里填错了哦，请检查！")
       }
       ElMessage.success("恭喜你，买到心仪的宝贝！")

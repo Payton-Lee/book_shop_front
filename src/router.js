@@ -16,6 +16,10 @@ const routes = [
       {
         path: "/orderconfirm",
         component: () => import('./components/order/OrderConfirm.vue')
+      },
+      {
+        path: "/addresslist",
+        component: () => import('./components/order/AddressList.vue')
       }
 
     ]
